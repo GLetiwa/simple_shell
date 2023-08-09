@@ -1,0 +1,12 @@
+#ignore swp files
+.*.sw*
+
+#ignore .out files
+*.out
+
+#ignore pseudocode files
+pseudocode
+
+#ignore test.c files
+test.c
+test*.c
