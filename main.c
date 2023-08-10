@@ -1,10 +1,4 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stddef.h>
-
-void tokenize_input(char *input);
 /**
 * int main -
 * @ac: 
@@ -63,10 +57,12 @@ void tokenize_input(char *input)
 	token = strtok(lineptr_copy, delim);
 	for (i = 0; token != NULL; i++)
 	{
-		argx[i] = malloc(sizeof(char) * _strlen(token));
+		argx[i] = malloc(sizeof(char) * (_strlen(token) + 1));
 		_strcpy(argx[i], token);
 		token = strtok(NULL, delim);
+		printf("%s\n", argx[i]);
 	}
-	argx[i] = NULL;
+	free_char2D(argx, i);
+	/*argx[i] = NULL; */
 	free(lineptr_copy);
 }
