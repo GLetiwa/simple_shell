@@ -53,7 +53,7 @@ void tokenize_input(char *input)
 			break;
 	}
 	string_tokens++;
-	argx = malloc(sizeof(char *) * string_tokens);
+	argx = malloc(sizeof(char *) * string_tokens + 1);
 	token = strtok(lineptr_copy, delim);
 	for (i = 0; token != NULL; i++)
 	{
@@ -62,7 +62,8 @@ void tokenize_input(char *input)
 		token = strtok(NULL, delim);
 		printf("%s\n", argx[i]);
 	}
+	argx[i] = NULL;
+	execute_command(argx);
 	free_char2D(argx, i);
-	/*argx[i] = NULL; */
 	free(lineptr_copy);
 }
