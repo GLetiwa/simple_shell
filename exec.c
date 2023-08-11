@@ -71,8 +71,6 @@ char *path_funct(char **envp, char *comm)
 				}
 				free(str_cp);
 			}
-			if (ret)
-				free(str_cp);
 			free(comms);
 			free(tmp);
 			break;
