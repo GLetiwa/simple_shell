@@ -6,14 +6,12 @@
 * @envp: environment variables
 * Return: 0 Always (Success)
 */
-int main(int argc, char **argv, char **envp)
+int main(int argc __attribute__((unused)), char **argv __attribute__((unused)), char **envp)
 {
 	char *prompt = "(Eshell) $ ", *lineptr;
 	size_t n = 0;
 	ssize_t chars_read;
 
-	(void)ac;
-	(void)argv;
 	while (1)
 	{
 		printf("%s", prompt);
