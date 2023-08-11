@@ -9,6 +9,8 @@ void execute_command(char **argx, char **envp)
 	int id = 0;
 	char *path_ptr;
 
+	if (_builtincmd(argx) == 0)
+		return;
 	if (access(argx[0], F_OK) && argx[0])
 	{
 		path_ptr = path_funct(envp, argx[0]);
@@ -23,7 +25,7 @@ void execute_command(char **argx, char **envp)
 		id = fork();
 	if (!id)
 	{
-		execve(argx[0], argx, NULL);
+		execve(argx[0], argx, envp);
 		perror("Error");
 	}
 	else
