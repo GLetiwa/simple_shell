@@ -29,66 +29,21 @@ void _strcpy(char *dest, const char *src)
 	dest[i] = '\0';
 }
 /**
- * free_char2D - frees 2D pointers
- * @pointer: 2D pointer to be freed
- * @i: number of pointers inside to be freed
- */ 
-void free_char2D(char **pointer, int i)
+ * _strcmp - compares two strings
+ * @s1: string 1
+ * @s2: string 2
+ * Return: returns the difference
+ */
+int _strcmp(char *s1, char *s2)
 {
-	int j;
-	for (j = 0; j < i; j++)
-		free(pointer[j]);
-	free(pointer);
-}
-/*
-char *_strtok(char *str, char *delimiter)
-{
-	static char *t_start = NULL;
-	static char *t_end = NULL;
-	char *rtn;
-	size_t *d_len;
+	int i = 0;
 
-	if (str)
+	while ((s1[i] != '\0') && (s2[i] != '\0'))
 	{
-		t_start = t_end = str;
-
-
+		if (s1[i] == s2[i])
+			i++;
+		else
+			return (s1[i] - s2[i]);
 	}
-
-	else if (!str && t_end)
-	{
-		free(t_start);
-		d_len = delimited_str(t_end, delimiter);
-		t_end = &t_start[d_len[1]];
-		t_start[d_len[0]] = '\0';
-	}
-	else
-		return (NULL);
-	return (t_start);
+	return (0);
 }
-size_t *delimited_str(static char token, char *d)
-{
-	size_t i, j, k, count, values[2];
-
-
-	for (i = 0; token[i]; i++)
-	{
-		for (j = 0, k = i, count = 0;(token[i] == d[0]) && d[j]; k++, j++)
-		{
-			if (token[k] == d[i])
-				count++;
-
-			else
-			{
-				count = 0;
-				break;
-			}
-		}
-		if (count != 0)
-		{
-			values[0] = i;
-			values[1] = i + (_strlen(d) - 1);
-		}
-	}
-}
-*/
