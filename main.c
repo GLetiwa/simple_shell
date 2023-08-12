@@ -69,7 +69,7 @@ void tokenize_input(char *input, char **envp)
 	}
 	argx[i] = NULL;
 	if (argx[0])
-		execute_command(argx, envp);
+		execute_command(argx, i, lineptr_copy, input, envp);
 	free_char2D(argx, i);
 	free(lineptr_copy);
 }

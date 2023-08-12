@@ -4,35 +4,42 @@
  * @argx: 2D string containing string + parameters
  * @envp: environment variables
  */
-void execute_command(char **argx, char **envp)
+int execute_command(char **argx, int i, char *lineptr_copy, char* input, char **envp)
 {
-	int id = 0;
+	int id = 0, error_val = 0, check = 0;
 	char *path_ptr;
 
-	if (_builtincmd(argx) == 0)
-		return;
-	if (access(argx[0], F_OK) && argx[0])
+	/*if (_builtincmd(argx) == 0)
+		return; */
+	check = special_commands(argx, i, lineptr_copy, input, envp);
+	if (!check)
 	{
-		path_ptr = path_funct(envp, argx[0]);
-		if (path_ptr)
+		if (access(argx[0], F_OK) && argx[0])
 		{
-			free(argx[0]);
-			argx[0] = path_ptr;
+			path_ptr = path_funct(envp, argx[0]);
+			if (path_ptr)
+			{
+				free(argx[0]);
+				argx[0] = path_ptr;
+				id = fork();
+			}
+		}
+		else if (argx[0])
 			id = fork();
+		if (!id)
+		{
+			execve(argx[0], argx, envp);
+			perror("Error");
+			error_val = 127;
+		}
+		else
+		{
+			wait(NULL);
+			printf("worked\n");
+			error_val = 0;
 		}
 	}
-	else if (argx[0])
-		id = fork();
-	if (!id)
-	{
-		execve(argx[0], argx, envp);
-		perror("Error");
-	}
-	else
-	{
-		wait(NULL);
-		printf("worked\n");
-	}
+	return (error_val);
 }
 /**
  * path_funct - attaches PATH to existing executables
@@ -80,4 +87,33 @@ char *path_funct(char **envp, char *comm)
 		free(tmp);
 	}
 	return ((ret ? NULL : str_cp));
+}
+/**
+ *
+ */
+int special_commands(char **argx, int j, char *lineptr_copy, char *input, char **envp)
+{
+	char *comm_and = argx[0], *spec_comm[] = {"exit", "env"};
+	int ex_val = 0, i;
+
+	for (i = 0; i < 2; i++)
+		if (!_strcmp(comm_and, spec_comm[i]))
+			break;
+	if (i == 2)
+		return (0);
+	switch (i)
+	{
+		case 0:
+			if (argx[1])
+				ex_val = (exit_check(argx[1]));
+			exit_stat(argx, j, lineptr_copy, input, ex_val);
+			return (1);
+		case 1:
+			env_fn(envp);
+			return (1);
+		default:
+			break;
+	}
+	return (0);
+
 }

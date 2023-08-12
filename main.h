@@ -21,10 +21,18 @@ int _strcmp(char *s1, char *s2);
 void tokenize_input(char *input, char **envp);
 
 /* exec functions */
-void execute_command(char **argv, char **envp);
+int execute_command(char **argx, int i, char *lineptr_copy, char* input, char **envp);
 char *path_funct(char **envp, char *comm);
+int special_commands(char **argx, int j, char *lineptr_copy, char *lineptr, char **envp);
 
 /* 2D pointers functions */
 void free_char2D(char **pointer, int i);
+
+/* exit functions */
+void exit_stat(char **argx, int i, char *lineptr_copy, char *lineptr, int ex_val);
+int exit_check(char *string_after_exit_command);
+
+/* env function */
+void env_fn(char **envp);
 
 #endif
