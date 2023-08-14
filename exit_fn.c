@@ -17,8 +17,8 @@ int exit_check(char *argx)
 			else
 				break;
 		}
-		val *= pv; 
-		digit = argx[i] - '0';
+		val *= pv; /* multiply val by the power of 10 */
+		digit = argx[i] - '0'; /* convert char into a digit */
 		val += digit;
 
 		pv *= 10;

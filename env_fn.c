@@ -1,6 +1,7 @@
 #include "main.h"
 /**
- *
+ * env_fn - 
+ * @envp: 
  */
 void env_fn(char **envp)
 {
