@@ -93,13 +93,13 @@ char *path_funct(char **envp, char *comm)
  */
 int special_commands(char **argx, int j, char *lineptr_copy, char *input, char **envp)
 {
-	char *comm_and = argx[0], *spec_comm[] = {"exit", "env"};
+	char *comm_and = argx[0], *spec_comm[] = {"exit", "env", "cd", "setenv", "unsetenv"};
 	int ex_val = 0, i;
 
-	for (i = 0; i < 2; i++)
+	for (i = 0; i < 5; i++)
 		if (!_strcmp(comm_and, spec_comm[i]))
 			break;
-	if (i == 2)
+	if (i == 5)
 		return (0);
 	switch (i)
 	{
@@ -110,6 +110,15 @@ int special_commands(char **argx, int j, char *lineptr_copy, char *input, char *
 			return (1);
 		case 1:
 			env_fn(envp);
+			return (1);
+		case 2:
+			/* cd function over here */
+			return (1);
+		case 3:
+			/* setenv function over here */
+			return (1);
+		case 4: 
+			/* unsetenv function over here */
 			return (1);
 		default:
 			break;
