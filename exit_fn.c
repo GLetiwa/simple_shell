@@ -31,7 +31,7 @@ int exit_check(char *argx)
 /*
  *
  */
-void exit_stat(char **argx, int i, char *lineptr_copy, char *lineptr, int ex_val)
+void exit_stat(char **argx, char *lineptr_copy, char *lineptr, int ex_val, char **envp)
 {
 	if (ex_val == -10000)
 	{
@@ -41,7 +41,8 @@ void exit_stat(char **argx, int i, char *lineptr_copy, char *lineptr, int ex_val
 		write(2, argx[1], _strlen(argx[1]));
 		write(2, " : numeric argument required\n", 29);
 	}
-	free_char2D(argx, i);
+	free_char2D(envp);
+	free_char2D(argx);
 	free(lineptr_copy);
 	free(lineptr);
 	exit(ex_val);

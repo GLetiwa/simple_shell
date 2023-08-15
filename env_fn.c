@@ -13,3 +13,10 @@ void env_fn(char **envp)
 		write(1, "\n", 1);
 	}
 }
+/*
+int ch_wd(char **argx, char **envp)
+{
+	char *_path, *old_path, *tmp_path;
+
+
+} */

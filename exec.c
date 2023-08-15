@@ -4,14 +4,14 @@
  * @argx: 2D string containing string + parameters
  * @envp: environment variables
  */
-int execute_command(char **argx, int i, char *lineptr_copy, char* input, char **envp)
+int execute_command(char **argx, char *lineptr_copy, char* input, char **envp)
 {
 	int id = 0, error_val = 0, check = 0;
 	char *path_ptr;
 
 	/*if (_builtincmd(argx) == 0)
 		return; */
-	check = special_commands(argx, i, lineptr_copy, input, envp);
+	check = special_commands(argx, lineptr_copy, input, envp);
 	if (!check)
 	{
 		if (access(argx[0], F_OK) && argx[0])
@@ -91,7 +91,7 @@ char *path_funct(char **envp, char *comm)
 /**
  *
  */
-int special_commands(char **argx, int j, char *lineptr_copy, char *input, char **envp)
+int special_commands(char **argx, char *lineptr_copy, char *input, char **envp)
 {
 	char *comm_and = argx[0], *spec_comm[] = {"exit", "env", "cd", "setenv", "unsetenv"};
 	int ex_val = 0, i;
@@ -106,7 +106,7 @@ int special_commands(char **argx, int j, char *lineptr_copy, char *input, char *
 		case 0:
 			if (argx[1])
 				ex_val = (exit_check(argx[1]));
-			exit_stat(argx, j, lineptr_copy, input, ex_val);
+			exit_stat(argx, lineptr_copy, input, ex_val, envp);
 			return (1);
 		case 1:
 			env_fn(envp);

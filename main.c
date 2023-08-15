@@ -6,12 +6,14 @@
 * @envp: environment variables
 * Return: 0 Always (Success)
 */
-int main(int argc __attribute__((unused)), char **argv __attribute__((unused)), char **envp)
+int main(void)
 {
-	char *prompt = "(Eshell) $ ", *lineptr;
+	char *prompt = "(Eshell) $ ", *lineptr, **envp;
 	size_t n = 0;
 	ssize_t chars_read;
+	extern char **environ;
 
+	envp = charray_clone(environ);
 	while (1)
 	{
 		printf("%s", prompt);
@@ -69,7 +71,8 @@ void tokenize_input(char *input, char **envp)
 	}
 	argx[i] = NULL;
 	if (argx[0])
-		execute_command(argx, i, lineptr_copy, input, envp);
-	free_char2D(argx, i);
+		execute_command(argx, lineptr_copy, input, envp);
+	free_char2D(envp);
+	free_char2D(argx);
 	free(lineptr_copy);
 }
