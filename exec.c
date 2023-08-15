@@ -95,6 +95,7 @@ int special_commands(char **argx, char *lineptr_copy, char *input, char **envp)
 {
 	char *comm_and = argx[0], *spec_comm[] = {"exit", "env", "cd", "setenv", "unsetenv"};
 	int ex_val = 0, i;
+	/*env_node *head_ptr = NULL;*/
 
 	for (i = 0; i < 5; i++)
 		if (!_strcmp(comm_and, spec_comm[i]))
@@ -115,7 +116,15 @@ int special_commands(char **argx, char *lineptr_copy, char *input, char **envp)
 			/* cd function over here */
 			return (1);
 		case 3:
-			/* setenv function over here */
+			/* setenv function over here 
+			if (argx[1] && argx[2])
+			{
+				if (_setenv(&head_ptr, argx[1], argx[2]) == 0)
+					printf("Env varible set successfully.\n");
+				else
+					perror("Failed to set env");
+			}
+			printf("Usage: setenv VARIABLE VALUE\n"); */
 			return (1);
 		case 4: 
 			/* unsetenv function over here */
