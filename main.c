@@ -1,9 +1,7 @@
 #include "main.h"
+
 /**
 * main - executes program
-* @argc: arguments count for rgv
-* @argv:string input from commandline
-* @envp: environment variables
 * Return: 0 Always (Success)
 */
 int main(void)
@@ -22,6 +20,8 @@ int main(void)
 		{
 			printf("Exiting shell....\n");
 			free(lineptr);
+			/* free_char2D(environ);*/
+			free_char2D(envp);
 			return (-1);
 		}
 	/*	printf("%s\n", lineptr);*/
@@ -29,6 +29,7 @@ int main(void)
 		free(lineptr);
 		lineptr = NULL;
 	}
+
 	return (0);
 }
 /**
@@ -72,7 +73,6 @@ void tokenize_input(char *input, char **envp)
 	argx[i] = NULL;
 	if (argx[0])
 		execute_command(argx, lineptr_copy, input, envp);
-	free_char2D(envp);
 	free_char2D(argx);
 	free(lineptr_copy);
 }

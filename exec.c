@@ -1,4 +1,7 @@
 #include "main.h"
+
+int ch_wd(char *p_name, char **envp);
+
 /**
  * execute_command - executes command in separate process
  * @argx: 2D string containing string + parameters
@@ -94,13 +97,13 @@ char *path_funct(char **envp, char *comm)
 int special_commands(char **argx, char *lineptr_copy, char *input, char **envp)
 {
 	char *comm_and = argx[0], *spec_comm[] = {"exit", "env", "cd", "setenv", "unsetenv"};
+	env_node *head_ptr = NULL;
 	int ex_val = 0, i;
-	/*env_node *head_ptr = NULL;*/
 
 	for (i = 0; i < 5; i++)
 		if (!_strcmp(comm_and, spec_comm[i]))
 			break;
-	if (i == 5)
+	if (i > 2)
 		return (0);
 	switch (i)
 	{
@@ -113,21 +116,16 @@ int special_commands(char **argx, char *lineptr_copy, char *input, char **envp)
 			env_fn(envp);
 			return (1);
 		case 2:
-			/* cd function over here */
+			ch_wd(argx[1], envp);
 			return (1);
+
 		case 3:
-			/* setenv function over here 
 			if (argx[1] && argx[2])
-			{
-				if (_setenv(&head_ptr, argx[1], argx[2]) == 0)
-					printf("Env varible set successfully.\n");
-				else
-					perror("Failed to set env");
-			}
-			printf("Usage: setenv VARIABLE VALUE\n"); */
+				_setenv(&head_ptr, argx[1], argx[2]);
 			return (1);
 		case 4: 
-			/* unsetenv function over here */
+			if (argx[1])
+				_unsetenv(&head_ptr, argx[1]);
 			return (1);
 		default:
 			break;

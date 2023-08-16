@@ -1,8 +1,9 @@
 #include "main.h"
+#include <limits.h>
 
 /**
- * free_char2D - frees 2D pointers
- * @pointer: 2D pointer to be freed
+ * free_char2D - frees 2D pointer
+ * @pointer: 2D pinter to be freed
  */
 void free_char2D(char **pointer)
 {
@@ -24,7 +25,7 @@ char **charray_clone(char **envp)
 		i++;
 	n_envp = malloc(sizeof(char *) * (i + 2));
 	if (!n_envp)
-		return NULL;
+		return (NULL);
 	for (j = 0; envp[j]; j++)
 	{
 		n_envp[j] = malloc(sizeof(char) * (_strlen(envp[j]) + 1));
@@ -39,4 +40,36 @@ char **charray_clone(char **envp)
 			_strcpy(n_envp[j], envp[j]);
 	}
 	return (n_envp);
+}
+/**
+ *
+ */
+char *env_str(char *dir, int dir_size, char *cur_wd)
+{
+	char *r_path = NULL, *r_env = NULL;
+	int i, j, len = 0;
+
+
+	r_path = (cur_wd == NULL ? getcwd(NULL, PATH_MAX) : &cur_wd[4]);
+
+	if (r_path != NULL)
+	{
+		len = _strlen(r_path);
+		r_env = malloc(sizeof(char) * (len + dir_size + 1));
+		if (!r_env)
+			return (NULL);
+		for (i = 0, j = 0; i < (len + dir_size); i++)
+		{
+			if (i < dir_size)
+				r_env[i] = dir[i];
+			else
+			{
+				r_env[i] = r_path[j];
+				j++;
+			}
+		}
+		r_env[i] = '\0';
+		free((cur_wd == NULL ? r_path : cur_wd));
+	}
+	return ((r_path == NULL ? NULL : r_env));
 }

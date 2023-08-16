@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * _strlen - checks the length of a string
  * @str: string
@@ -48,3 +49,25 @@ int _strcmp(char *s1, char *s2)
 	return (0);
 }
 
+/**
+ * _strdup - duplicates a string
+ * @str: string to be duplicated
+ *
+ * Return: duplicated string
+ */
+char *_strdup(char *str)
+{
+	size_t len;
+	char *duplicate;
+
+	if (!str)
+		return (NULL);
+	len = _strlen(str) + 1;
+	duplicate = (char *)malloc(len);
+
+	if (duplicate)
+	{
+		_strcpy(duplicate, str);
+	}
+	return (duplicate);
+}

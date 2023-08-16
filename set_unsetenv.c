@@ -1,5 +1,13 @@
 #include "main.h"
 
+/**
+ * _setenv - sets or updates environment variable
+ * @head_ptr: 2D pointer to the beginning of the linked list
+ * @name: name of the environment variable
+ * @value:value of the environment variable
+ *
+ * Return: 0 on success and 1 if it fails
+ */
 int _setenv(env_node **head_ptr, char *name, char *value)
 {
 	env_node *head = *head_ptr;
@@ -41,7 +49,13 @@ int _setenv(env_node **head_ptr, char *name, char *value)
 	*head_ptr = new;
 	return (0);
 }
-
+/**
+ * _unsetenv - removes an environment variable
+ * @head_ptr: 2D pointer to the environment linked list
+ * @name: name of the nevironment varible
+ *
+ * Return: 0 on sucess and 1 on failure
+ */
 int _unsetenv(env_node **head_ptr, char *name)
 {
 	env_node *head = *head_ptr;
