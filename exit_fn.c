@@ -17,8 +17,10 @@ int exit_check(char *argx)
 		{
 			if (!i)
 				return (-10000);
-			/* else */
-				/*break; */
+			/*
+			 * else
+			 * break;
+			 */
 		}
 		val *= pv; /* multiply val by the power of 10 */
 		digit = argx[i] - '0'; /* convert char into a digit */
@@ -31,16 +33,16 @@ int exit_check(char *argx)
 	return (val);
 
 }
-/*
+/**
  * exit_stat - exits shell with a specified exit value
  * @argx: command and its args
  * @lineptr_copy: copy of the input command line
  * @lineptr: original input command
- * @ex_val: exit vale to use
+ * @ex_val: exit value to use
  * @envp:environment variables
  */
-void exit_stat(char **argx, char *lineptr_copy, char *lineptr,
-		int ex_val, char **envp)
+void exit_stat(char **argx, char *lineptr_copy,
+		char *lineptr, int ex_val, char **envp)
 {
 	if (ex_val == -10000)
 	{
