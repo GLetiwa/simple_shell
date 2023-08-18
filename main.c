@@ -7,18 +7,20 @@
 int main(void)
 {
 	char *prompt = "(Eshell) $ ", *lineptr, **envp;
-	size_t n = 0;
+	size_t n = 0, len = _strlen(prompt);
 	ssize_t chars_read;
 	extern char **environ;
-
+	
 	envp = charray_clone(environ);
 	while (1)
 	{
-		printf("%s", prompt);
+		/* printf("%s", prompt); */
+		write(STDOUT_FILENO, prompt, len);
 		chars_read = getline(&lineptr, &n, stdin);
 		if (chars_read == -1)
 		{
-			printf("Exiting shell....\n");
+			/* printf("Exiting shell....\n");*/
+			write(STDOUT_FILENO, "Exiting shell....\n", 18);
 			free(lineptr);
 			/* free_char2D(environ);*/
 			free_char2D(envp);
