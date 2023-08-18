@@ -5,13 +5,13 @@ char *env_str(char *dir, int dir_size, char *cur_wd);
 int ch_wd(char *p_name, char **envp);
 
 /**
- * env_fn - 
- * @envp: 
+ * env_fn - displays environment variables
+ * @envp: array of environment variables
  */
 void env_fn(char **envp)
 {
 	int i;
-	
+
 	for (i = 0; envp[i]; i++)
 	{
 		write(1, envp[i], _strlen(envp[i]));
@@ -19,7 +19,10 @@ void env_fn(char **envp)
 	}
 }
 /**
- *
+ * ch_wd - changes the working directory
+ * @p_name: target directory name
+ * @envp: array of environment variables
+ * Return: Always 0 (Success)
  */
 int ch_wd(char *p_name, char **envp)
 {
@@ -39,7 +42,7 @@ int ch_wd(char *p_name, char **envp)
 				break;
 	switch (i)
 	{
-		case 0: 
+		case 0:
 		case 1:	/* cd home */
 			res = chdir(&(envp[h_d][5]));
 			break;
@@ -62,25 +65,29 @@ int ch_wd(char *p_name, char **envp)
 
 }
 /**
- *
+ * get_env - Retrieves the index of an environment variable
+ * @envp: array of environment variables
+ * @env_var: target environment variable
+ * Return: index of the target variable, or 1 if not found
  */
 int get_env(char **envp, char *env_var)
 {
-        int i, j;
+	int i, j;
+
 	if (!envp)
 		return (-1);
-        for (i = 0; envp[i]; i++)
-        {
-                for (j = 0; env_var[j]; j++)
-                        if ( !envp[i][j] || (env_var[j] != envp[i][j]))
-                        {
-                                j = 0;
-                                break;
-                        }
-                if (j)
-                        return (i);
-        }
+	for (i = 0; envp[i]; i++)
+	{
+		for (j = 0; env_var[j]; j++)
+		if (!envp[i][j] || (env_var[j] != envp[i][j]))
+		{
+			j = 0;
+			break;
+		}
+		if (j)
+			return (i);
+	}
 	if (!envp[i])
 		return (-1);
-	return(-1);
+	return (-1);
 }

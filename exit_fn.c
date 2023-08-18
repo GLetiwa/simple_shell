@@ -1,10 +1,13 @@
 #include "main.h"
 /**
- *
+ * exit_check - checks if the argument is a valid exit value
+ * @argx: argument to check
+ * Return: valid exit value or -10000 for error
  */
 int exit_check(char *argx)
 {
 	int i, val, pv, digit;
+
 	pv = val = i = 0;
 	if (argx[i] == '-')
 		i++;
@@ -13,9 +16,9 @@ int exit_check(char *argx)
 		if ((argx[i] < '0' || argx[i] > '9'))
 		{
 			if (!i)
-				return(-10000);
-			else
-				break;
+				return (-10000);
+			/* else */
+				/*break; */
 		}
 		val *= pv; /* multiply val by the power of 10 */
 		digit = argx[i] - '0'; /* convert char into a digit */
@@ -29,9 +32,15 @@ int exit_check(char *argx)
 
 }
 /*
- *
+ * exit_stat - exits shell with a specified exit value
+ * @argx: command and its args
+ * @lineptr_copy: copy of the input command line
+ * @lineptr: original input command
+ * @ex_val: exit vale to use
+ * @envp:environment variables
  */
-void exit_stat(char **argx, char *lineptr_copy, char *lineptr, int ex_val, char **envp)
+void exit_stat(char **argx, char *lineptr_copy, char *lineptr,
+		int ex_val, char **envp)
 {
 	if (ex_val == -10000)
 	{

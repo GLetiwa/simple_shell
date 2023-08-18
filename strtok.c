@@ -5,9 +5,9 @@
 /**
  * is_delim - checks if a character is a delimeter
  * @character: current character in check
- * @delimeter: the delimiter to be checked
+ * @delimiter: the delimiter to be checked
  *
- * Return 1 if character is delimiter and 0 if not
+ * Return: 1 if character is delimiter and 0 if not
  */
 char is_delim(char character, char *delimiter)
 {
@@ -84,21 +84,4 @@ char *_strtok(char *str, char *delim)
 	buffer[i] = '\0';
 	position++;
 	return (buffer);
-
 }
-
-int main(void)
-{
-	char *str = "Grace and Anthony's project";
-	char *token = NULL;
-	char *del = " ";
-	
-	token = _strtok(str, del);
-	while (token != NULL)
-	{
-		printf("token %s\n", token);
-		token = _strtok(NULL, del);
-	}
-	return (0);
-}
-

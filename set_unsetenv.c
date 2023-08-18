@@ -6,7 +6,7 @@
  * @name: name of the environment variable
  * @value:value of the environment variable
  *
- * Return: 0 on success and 1 if it fails
+ * Return: 0 on success and 1 on failure
  */
 int _setenv(env_node **head_ptr, char *name, char *value)
 {
@@ -52,7 +52,7 @@ int _setenv(env_node **head_ptr, char *name, char *value)
 /**
  * _unsetenv - removes an environment variable
  * @head_ptr: 2D pointer to the environment linked list
- * @name: name of the nevironment varible
+ * @name: name of the environment varible
  *
  * Return: 0 on sucess and 1 on failure
  */

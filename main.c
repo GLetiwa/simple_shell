@@ -10,23 +10,20 @@ int main(void)
 	size_t n = 0, len = _strlen(prompt);
 	ssize_t chars_read;
 	extern char **environ;
-	
+
 	envp = charray_clone(environ);
 	while (1)
 	{
-		/* printf("%s", prompt); */
 		write(STDOUT_FILENO, prompt, len);
 		chars_read = getline(&lineptr, &n, stdin);
 		if (chars_read == -1)
 		{
-			/* printf("Exiting shell....\n");*/
 			write(STDOUT_FILENO, "Exiting shell....\n", 18);
 			free(lineptr);
 			/* free_char2D(environ);*/
 			free_char2D(envp);
 			return (-1);
 		}
-	/*	printf("%s\n", lineptr);*/
 		tokenize_input(lineptr, envp);
 		free(lineptr);
 		lineptr = NULL;
@@ -70,7 +67,6 @@ void tokenize_input(char *input, char **envp)
 		argx[i] = malloc(sizeof(char) * (_strlen(token) + 1));
 		_strcpy(argx[i], token);
 		token = strtok(NULL, delim);
-	/*	printf("%s\n", argx[i]); */
 	}
 	argx[i] = NULL;
 	if (argx[0])

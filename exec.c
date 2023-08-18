@@ -6,14 +6,15 @@ int ch_wd(char *p_name, char **envp);
  * execute_command - executes command in separate process
  * @argx: 2D string containing string + parameters
  * @envp: environment variables
+ * @lineptr_copy: copy of the input command line
+ * @input: original input command line
+ * Return: error value or exit status of the command
  */
-int execute_command(char **argx, char *lineptr_copy, char* input, char **envp)
+int execute_command(char **argx, char *lineptr_copy, char *input, char **envp)
 {
 	int id = 0, error_val = 0, check = 0;
 	char *path_ptr;
 
-	/*if (_builtincmd(argx) == 0)
-		return; */
 	check = special_commands(argx, lineptr_copy, input, envp);
 	if (!check)
 	{
@@ -92,11 +93,17 @@ char *path_funct(char **envp, char *comm)
 	return ((ret ? NULL : str_cp));
 }
 /**
- *
+ * special_commands - handles special commands
+ * @argx: command and its arguments
+ * @lineptr_copy: copy of the input command line
+ * @input: original input command line
+ * @envp: environment variables
+ * Return: 1 if special command is executed, 0 otherwies
  */
 int special_commands(char **argx, char *lineptr_copy, char *input, char **envp)
 {
-	char *comm_and = argx[0], *spec_comm[] = {"exit", "env", "cd", "setenv", "unsetenv"};
+	char *comm_and = argx[0], *spec_comm[] = {"exit", "env", "cd",
+		"setenv", "unsetenv"};
 	env_node *head_ptr = NULL;
 	int ex_val = 0, i;
 
@@ -123,7 +130,7 @@ int special_commands(char **argx, char *lineptr_copy, char *input, char **envp)
 			if (argx[1] && argx[2])
 				_setenv(&head_ptr, argx[1], argx[2]);
 			return (1);
-		case 4: 
+		case 4:
 			if (argx[1])
 				_unsetenv(&head_ptr, argx[1]);
 			return (1);
@@ -132,4 +139,4 @@ int special_commands(char **argx, char *lineptr_copy, char *input, char **envp)
 	}
 	return (0);
 
-}
+

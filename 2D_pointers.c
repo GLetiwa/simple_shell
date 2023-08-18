@@ -14,7 +14,9 @@ void free_char2D(char **pointer)
 	free(pointer);
 }
 /**
- *
+ * charray_clone - clones an array of strings
+ * @envp: original array of strings
+ * Return: cloned array of strings
  */
 char **charray_clone(char **envp)
 {
@@ -42,7 +44,11 @@ char **charray_clone(char **envp)
 	return (n_envp);
 }
 /**
- *
+ * env_str - creates an environmental string
+ * @dir: directory string
+ * @dir_size: size of the directory string
+ * @cur_wd: current working directory
+ * Return: the environment string
  */
 char *env_str(char *dir, int dir_size, char *cur_wd)
 {
