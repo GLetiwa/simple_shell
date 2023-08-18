@@ -2,23 +2,26 @@
 
 /**
 * main - executes program
+* @argc: argument count
+* @argv: arguments passed to main
+* @envp_1: environment variables
 * Return: 0 Always (Success)
 */
-int main(void)
+int main(int argc __attribute__((unused)),
+		char **argv __attribute__((unused)), char **envp_1)
 {
 	char *prompt = "(Eshell) $ ", *lineptr, **envp;
 	size_t n = 0, len = _strlen(prompt);
 	ssize_t chars_read;
-	extern char **environ;
 
-	envp = charray_clone(environ);
+	envp = charray_clone(envp_1);
 	while (1)
 	{
 		write(STDOUT_FILENO, prompt, len);
 		chars_read = getline(&lineptr, &n, stdin);
 		if (chars_read == -1)
 		{
-			write(STDOUT_FILENO, "Exiting shell....\n", 18);
+			/* write(STDOUT_FILENO, "Exiting shell....\n", 18); */
 			free(lineptr);
 			/* free_char2D(environ);*/
 			free_char2D(envp);
