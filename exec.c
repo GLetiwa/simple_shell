@@ -38,7 +38,7 @@ int execute_command(char **argx, char *lineptr_copy, char* input, char **envp)
 		else
 		{
 			wait(NULL);
-			printf("worked\n");
+			/* printf("worked\n"); */
 			error_val = 0;
 		}
 	}
