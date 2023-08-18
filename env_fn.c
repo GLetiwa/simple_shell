@@ -42,8 +42,7 @@ int ch_wd(char *p_name, char **envp)
 				break;
 	switch (i)
 	{
-		case 0:
-		case 1:	/* cd home */
+		case 0:case 1:	/* cd home */
 			res = chdir(&(envp[h_d][5]));
 			break;
 		case 2: /* cd - */
