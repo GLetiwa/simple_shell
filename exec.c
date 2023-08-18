@@ -110,7 +110,7 @@ int special_commands(char **argx, char *lineptr_copy, char *input, char **envp)
 	for (i = 0; i < 5; i++)
 		if (!_strcmp(comm_and, spec_comm[i]))
 			break;
-	if (i > 2)
+	if (i > 4)
 		return (0);
 	switch (i)
 	{
@@ -134,9 +134,6 @@ int special_commands(char **argx, char *lineptr_copy, char *input, char **envp)
 			if (argx[1])
 				_unsetenv(&head_ptr, argx[1]);
 			return (1);
-		default:
-			break;
 	}
 	return (0);
-
-
+}
