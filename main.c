@@ -28,7 +28,7 @@ int main(int argc __attribute__((unused)),
 			free(lineptr);
 			/* free_char2D(environ);*/
 			free_char2D(envp);
-			return (-1);
+			return (0);
 		}
 		tokenize_input(lineptr, envp);
 		free(lineptr);
