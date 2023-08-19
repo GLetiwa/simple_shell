@@ -17,7 +17,10 @@ int main(int argc __attribute__((unused)),
 	envp = charray_clone(envp_1);
 	while (1)
 	{
-		write(STDOUT_FILENO, prompt, len);
+		if (isatty(STDIN_FILENO) == 1)
+		{
+			write(STDOUT_FILENO, prompt, len);
+		}
 		chars_read = getline(&lineptr, &n, stdin);
 		if (chars_read == -1)
 		{
