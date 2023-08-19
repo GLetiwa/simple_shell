@@ -3,6 +3,7 @@
 
 #ignore .out files
 *.out
+hsh
 
 #ignore pseudocode files
 pseudocode
@@ -10,3 +11,10 @@ pseudocode
 #ignore test.c files
 test.c
 test*.c
+
+
+
+#ignore TEST_SUITE files
+TEST_SUITES
+allowed_functions
+runchecker.bash
