@@ -59,4 +59,7 @@ int get_env(char **envp, char *env_var);
 int _setenv(env_node **head_ptr, char *name, char *value);
 int _unsetenv(env_node **head_ptr, char *name);
 
+/* comment handler */
+void comment_handler(char *str_add);
+
 #endif

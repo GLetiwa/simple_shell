@@ -1,3 +1,4 @@
+#include "main.h"
 /**
  * comment_handler - replaces comments with a null terminator
  * @str_add: address of the string to be handled

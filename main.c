@@ -18,18 +18,16 @@ int main(int argc __attribute__((unused)),
 	while (1)
 	{
 		if (isatty(STDIN_FILENO) == 1)
-		{
 			write(STDOUT_FILENO, prompt, len);
-		}
 		chars_read = getline(&lineptr, &n, stdin);
 		if (chars_read == -1)
 		{
-			/* write(STDOUT_FILENO, "Exiting shell....\n", 18); */
 			free(lineptr);
-			/* free_char2D(environ);*/
 			free_char2D(envp);
+			write(1, "\n", 1);
 			return (0);
 		}
+		comment_handler(lineptr);
 		tokenize_input(lineptr, envp);
 		free(lineptr);
 		lineptr = NULL;
