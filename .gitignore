@@ -3,6 +3,8 @@
 
 #ignore .out files
 *.out
+
+#ignore hsh files
 hsh
 
 #ignore pseudocode files
