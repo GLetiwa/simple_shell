@@ -11,9 +11,39 @@
 void execute_command(char **argx, char *argv_0,
 		char *lineptr_copy, char *input, char **envp, int *er_val)
 {
-	int id = 0, check = 0;
-	char *path_ptr;
+	int id = 0, check = 0; 
+	int lexit_status = 0, rexit_status = 0;
+	int log_op = check_logical_op(argx);
+	char *path_ptr, **left_cmd, **right_cmd;
 
+	if (log_op)
+	{
+		left_cmd = get_left_command(argx, log_op);
+		right_cmd = get_right_command(argx, log_op);
+		execute_command(left_cmd, argv_0, lineptr_copy, input, envp, &lexit_status);
+		if ((log_op == LOGICAL_AND && lexit_status == 0) ||
+			(log_op == LOGICAL_OR && lexit_status != 0)) 
+		{
+			while (right_cmd[0] != NULL)
+			{
+				execute_command(right_cmd, argv_0, lineptr_copy, input, envp, &rexit_status);
+				if (rexit_status == 0)
+				{
+            				*er_val = rexit_status;
+					break;
+				}
+				right_cmd = get_right_command(right_cmd, log_op);
+			}
+		}
+		else
+		{
+			*er_val = lexit_status;
+			free_char2D(right_cmd);
+		}
+		free_char2D(left_cmd);
+		free_char2D(right_cmd);
+
+	}
 	check = special_commands(argx, lineptr_copy, input, envp, er_val);
 	if (!check)
 	{

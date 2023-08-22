@@ -68,7 +68,7 @@ void tokenize_input(char *input, char **envp, char **argv, int *ex_stat)
 			break;
 	}
 	string_tokens++;
-	argx = malloc(sizeof(char *) * string_tokens + 1);
+	argx = malloc(sizeof(char *) * (string_tokens + 1));
 	token = strtok(lineptr_copy, delim);
 	for (i = 0; token != NULL; i++)
 	{
@@ -77,6 +77,13 @@ void tokenize_input(char *input, char **envp, char **argv, int *ex_stat)
 		token = strtok(NULL, delim);
 	}
 	argx[i] = NULL;
+	for (i = 0; argx[i] != NULL; i++) 
+	{
+		if (strcmp(argx[i], "&&") == 0 || strcmp(argx[i], "||") == 0) 
+		{
+			argx[i] = NULL;
+		}
+	}
 	if (argx[0])
 		execute_command(argx, argv[0], lineptr_copy, input, envp, ex_stat);
 	free_char2D(argx);
