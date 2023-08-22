@@ -34,13 +34,13 @@ int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
 
 /* main.c functions */
-void tokenize_input(char *input, char **envp);
+void tokenize_input(char *input, char **envp, char **argv, int *ex_stat);
 
 /* exec functions */
-int execute_command(char **argx, char *lineptr_copy, char *input, char **envp);
+void execute_command(char **argx, char *argv_0, char *lineptr_copy, char *input, char **envp, int *er_val);
 char *path_funct(char **envp, char *comm);
 int special_commands(char **argx, char *lineptr_copy,
-		char *lineptr, char **envp);
+		char *lineptr, char **envp, int *er_val);
 
 /* 2D pointers functions */
 void free_char2D(char **pointer);
@@ -53,7 +53,8 @@ void exit_stat(char **argx, char *lineptr_copy, char *lineptr,
 int exit_check(char *string_after_exit_command);
 
 /* env function */
-void env_fn(char **envp);
+int env_fn(char **envp);
+extern char **environ;
 int ch_wd(char *p_name, char **envp);
 int get_env(char **envp, char *env_var);
 int _setenv(env_node **head_ptr, char *name, char *value);

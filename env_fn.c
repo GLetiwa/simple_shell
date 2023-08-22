@@ -8,15 +8,18 @@ int ch_wd(char *p_name, char **envp);
  * env_fn - displays environment variables
  * @envp: array of environment variables
  */
-void env_fn(char **envp)
+int env_fn(char **envp)
 {
 	int i;
 
-	for (i = 0; envp[i]; i++)
-	{
-		write(1, envp[i], _strlen(envp[i]));
-		write(1, "\n", 1);
-	}
+	if (envp)
+		for (i = 0; envp[i]; i++)
+		{
+			write(1, envp[i], _strlen(envp[i]));
+			write(1, "\n", 1);
+		}
+
+	return ((envp ? 0 : 1));
 }
 /**
  * ch_wd - changes the working directory
@@ -60,7 +63,7 @@ int ch_wd(char *p_name, char **envp)
 		free(old_wd);
 		envp[c_wd] = env_str("PWD=", 4, NULL);
 	}
-	return (0);
+	return ((res == -1 ? 1 : 0));
 
 }
 /**

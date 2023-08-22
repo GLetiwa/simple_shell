@@ -8,10 +8,9 @@ int exit_check(char *argx)
 {
 	int i, val, pv, digit;
 
-	pv = val = i = 0;
-	if (argx[i] == '-')
-		i++;
-	for (pv = 1; argx && argx[i] != '\0'; i++)
+	val = 0;
+	i = (argx[0] == '-' ? 1 : 0);
+	for (pv = 10; argx && argx[i] != '\0'; i++)
 	{
 		if ((argx[i] < '0' || argx[i] > '9'))
 		{
@@ -26,10 +25,12 @@ int exit_check(char *argx)
 		digit = argx[i] - '0'; /* convert char into a digit */
 		val += digit;
 
-		pv *= 10;
 	}
-	if (val > 255)
-		val = val % 256;
+
+	while (val > 255)
+		val = val - 256;
+	if (argx[0] == '-')
+		val = 256 - val;
 	return (val);
 
 }

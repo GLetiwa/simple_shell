@@ -1,7 +1,5 @@
 #include "main.h"
 
-int ch_wd(char *p_name, char **envp);
-
 /**
  * execute_command - executes command in separate process
  * @argx: 2D string containing string + parameters
@@ -10,12 +8,13 @@ int ch_wd(char *p_name, char **envp);
  * @input: original input command line
  * Return: error value or exit status of the command
  */
-int execute_command(char **argx, char *lineptr_copy, char *input, char **envp)
+void execute_command(char **argx, char *argv_0,
+		char *lineptr_copy, char *input, char **envp, int *er_val)
 {
-	int id = 0, error_val = 0, check = 0;
+	int id = 0, check = 0;
 	char *path_ptr;
 
-	check = special_commands(argx, lineptr_copy, input, envp);
+	check = special_commands(argx, lineptr_copy, input, envp, er_val);
 	if (!check)
 	{
 		if (access(argx[0], F_OK) && argx[0])
@@ -32,17 +31,22 @@ int execute_command(char **argx, char *lineptr_copy, char *input, char **envp)
 			id = fork();
 		if (!id)
 		{
-			execve(argx[0], argx, envp);
-			perror("Error");
-			error_val = 127;
+			*er_val = execve(argx[0], argx, envp);
+			write(2, argv_0, _strlen(argv_0));
+			write(2, ": 1: ", 5);
+			write(2, argx[0], _strlen(argx[0]));
+			write(2, ": not found\n", 12);
+			/* perror(argx[0]); */
+
 		}
 		else
 		{
-			wait(NULL);
-			error_val = 0;
+			wait(&check);
+			*er_val = (check  ? check : 0);
 		}
+		*er_val = (*er_val == -1 ? 127 : *er_val);
+
 	}
-	return (error_val);
 }
 /**
  * path_funct - attaches PATH to existing executables
@@ -99,12 +103,12 @@ char *path_funct(char **envp, char *comm)
  * @envp: environment variables
  * Return: 1 if special command is executed, 0 otherwies
  */
-int special_commands(char **argx, char *lineptr_copy, char *input, char **envp)
+int special_commands(char **argx, char *lineptr_copy, char *input, char **envp, int *er_val)
 {
 	char *comm_and = argx[0], *spec_comm[] = {"exit", "env", "cd",
 		"setenv", "unsetenv"};
 	env_node *head_ptr = NULL;
-	int ex_val = 0, i;
+	int ex_val = *er_val, i;
 
 	for (i = 0; i < 5; i++)
 		if (!_strcmp(comm_and, spec_comm[i]))
@@ -119,10 +123,10 @@ int special_commands(char **argx, char *lineptr_copy, char *input, char **envp)
 			exit_stat(argx, lineptr_copy, input, ex_val, envp);
 			return (1);
 		case 1:
-			env_fn(envp);
+			*er_val = env_fn(envp);
 			return (1);
 		case 2:
-			ch_wd(argx[1], envp);
+			*er_val = ch_wd(argx[1], envp);
 			return (1);
 
 		case 3:

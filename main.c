@@ -8,13 +8,15 @@
 * Return: 0 Always (Success)
 */
 int main(int argc __attribute__((unused)),
-		char **argv __attribute__((unused)), char **envp_1)
+		char **argv, char **envp_1 __attribute__((unused)))
 {
 	char *prompt = "(Eshell) $ ", *lineptr, **envp;
 	size_t n = 0, len = _strlen(prompt);
 	ssize_t chars_read;
+	int exit_stat = 0;
 
-	envp = charray_clone(envp_1);
+	envp = charray_clone(environ); /* (envp_1);*/
+
 	while (1)
 	{
 		if (isatty(STDIN_FILENO) == 1)
@@ -24,11 +26,13 @@ int main(int argc __attribute__((unused)),
 		{
 			free(lineptr);
 			free_char2D(envp);
-			write(1, "\n", 1);
-			return (0);
+			/* write(1, "\n", 1);*/
+			if (exit_stat > 255)
+				return (exit_stat / 256);
+			return (exit_stat);
 		}
 		comment_handler(lineptr);
-		tokenize_input(lineptr, envp);
+		tokenize_input(lineptr, envp, argv, &exit_stat);
 		free(lineptr);
 		lineptr = NULL;
 	}
@@ -40,7 +44,7 @@ int main(int argc __attribute__((unused)),
  * @input: string input from getline
  * @envp: 2D string from main args
  */
-void tokenize_input(char *input, char **envp)
+void tokenize_input(char *input, char **envp, char **argv, int *ex_stat)
 {
 	char *delim = " \n", *token, *lineptr_copy;
 	int i, string_tokens = 0;
@@ -74,7 +78,7 @@ void tokenize_input(char *input, char **envp)
 	}
 	argx[i] = NULL;
 	if (argx[0])
-		execute_command(argx, lineptr_copy, input, envp);
+		execute_command(argx, argv[0], lineptr_copy, input, envp, ex_stat);
 	free_char2D(argx);
 	free(lineptr_copy);
 }
