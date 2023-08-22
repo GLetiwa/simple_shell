@@ -1,6 +1,11 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#define LOGICAL_AND 1
+#define LOGICAL_OR 2
+#define NO_LOGICAL_OP 0
+
+
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,7 +42,8 @@ char *_strdup(char *str);
 void tokenize_input(char *input, char **envp, char **argv, int *ex_stat);
 
 /* exec functions */
-void execute_command(char **argx, char *argv_0, char *lineptr_copy, char *input, char **envp, int *er_val);
+void execute_command(char **argx, char *argv_0, char *lineptr_copy, 
+		char *input, char **envp, int *er_val);
 char *path_funct(char **envp, char *comm);
 int special_commands(char **argx, char *lineptr_copy,
 		char *lineptr, char **envp, int *er_val);
@@ -62,5 +68,8 @@ int _unsetenv(env_node **head_ptr, char *name);
 
 /* comment handler */
 void comment_handler(char *str_add);
+char **get_right_command(char **argx, int logical_op __attribute__((unused)));
+char **get_left_command(char **argx, int logical_op __attribute__((unused)));
+int check_logical_op(char **argx);
 
 #endif
