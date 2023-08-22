@@ -16,7 +16,6 @@ int main(int argc __attribute__((unused)),
 	int exit_stat = 0;
 
 	envp = charray_clone(environ); /* (envp_1);*/
-
 	while (1)
 	{
 		if (isatty(STDIN_FILENO) == 1)
@@ -26,7 +25,6 @@ int main(int argc __attribute__((unused)),
 		{
 			free(lineptr);
 			free_char2D(envp);
-			/* write(1, "\n", 1);*/
 			if (exit_stat > 255)
 				return (exit_stat / 256);
 			return (exit_stat);
@@ -36,7 +34,6 @@ int main(int argc __attribute__((unused)),
 		free(lineptr);
 		lineptr = NULL;
 	}
-
 	return (0);
 }
 /**
@@ -77,12 +74,10 @@ void tokenize_input(char *input, char **envp, char **argv, int *ex_stat)
 		token = strtok(NULL, delim);
 	}
 	argx[i] = NULL;
-	for (i = 0; argx[i] != NULL; i++) 
+	for (i = 0; argx[i] != NULL; i++)
 	{
-		if (strcmp(argx[i], "&&") == 0 || strcmp(argx[i], "||") == 0) 
-		{
+		if (strcmp(argx[i], "&&") == 0 || strcmp(argx[i], "||") == 0)
 			argx[i] = NULL;
-		}
 	}
 	if (argx[0])
 		execute_command(argx, argv[0], lineptr_copy, input, envp, ex_stat);
