@@ -44,7 +44,6 @@ char **charray_clone(char **envp)
 		{
 			n_envp[j] = NULL;
 			n_envp[j] = malloc(sizeof(char *) * (_strlen(envp[j]) + 1));
-			
 			if (!n_envp[j])
 			{
 				for (; j >= 0; j--)
