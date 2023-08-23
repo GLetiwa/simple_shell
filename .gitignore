@@ -17,6 +17,7 @@ test*.c
 
 
 #ignore TEST_SUITE files
-TEST_SUITES
-allowed_functions
-runchecker.bash
+
+ TEST_SUITES
+ allowed_functions
+ runchecker.bash
