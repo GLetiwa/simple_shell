@@ -14,7 +14,7 @@ void execute_command(char **argx, char *argv_0,
 		char *lineptr_copy, char *input, char **envp, int *er_val)
 {
 	int id = 0, check = 0;
-	char *path_ptr;
+	char *path_ptr = NULL;
 
 	check = special_commands(argx, lineptr_copy, input, envp, er_val);
 	if (!check)
@@ -55,8 +55,8 @@ void execute_command(char **argx, char *argv_0,
  */
 char *path_funct(char **envp, char *comm)
 {
-	int i, len = _strlen(comm), str_tok, ret = -1;
-	char *token, *str_cp, *comms, *tmp;
+	int i = 0, len = _strlen(comm), str_tok = 0, ret = -1;
+	char *token = NULL, *str_cp = NULL, *comms = NULL, *tmp = NULL;
 
 	comms = malloc(sizeof(char) * len + 2);
 	len = len + 2;
@@ -109,7 +109,7 @@ int special_commands(char **argx, char *lineptr_copy,
 	char *comm_and = argx[0], *spec_comm[] = {"exit", "env", "cd",
 		"setenv", "unsetenv"};
 	env_node *head_ptr = NULL;
-	int ex_val = *er_val, i;
+	int ex_val = *er_val, i = 0;
 
 	for (i = 0; i < 5; i++)
 		if (!_strcmp(comm_and, spec_comm[i]))

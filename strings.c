@@ -57,8 +57,8 @@ int _strcmp(char *s1, char *s2)
  */
 char *_strdup(char *str)
 {
-	size_t len;
-	char *duplicate;
+	size_t len = 0;
+	char *duplicate = NULL;
 
 	if (!str)
 		return (NULL);
@@ -66,8 +66,7 @@ char *_strdup(char *str)
 	duplicate = (char *)malloc(len);
 
 	if (duplicate)
-	{
 		_strcpy(duplicate, str);
-	}
 	return (duplicate);
 }
+

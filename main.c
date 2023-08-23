@@ -10,9 +10,9 @@
 int main(int argc __attribute__((unused)),
 		char **argv, char **envp_1 __attribute__((unused)))
 {
-	char *prompt = "($) ", *lineptr, **envp;
+	char *prompt = "($) ", *lineptr = NULL, **envp = NULL;
 	size_t n = 0, len = _strlen(prompt);
-	ssize_t chars_read;
+	ssize_t chars_read = 0;
 	int exit_stat = 0;
 
 	envp = charray_clone(environ); /* (envp_1);*/
@@ -47,12 +47,12 @@ int main(int argc __attribute__((unused)),
  */
 void tokenize_input(char *input, char **envp, char **argv, int *ex_stat)
 {
-	char *delim = " \n", *token, *lineptr_copy;
-	int i, string_tokens = 0;
-	char **argx;
+	char *delim = " \n", *token = NULL, *lineptr_copy = NULL;
+	int i = 0, string_tokens = 0;
+	char **argx = NULL;
 	size_t chars_read = _strlen(input);
 
-	lineptr_copy = malloc(sizeof(char) * chars_read);
+	lineptr_copy = malloc(sizeof(char *) * chars_read);
 	if (!lineptr_copy)
 	{
 		perror("Memory allocation error");

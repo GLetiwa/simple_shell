@@ -7,11 +7,19 @@
  */
 void free_char2D(char **pointer)
 {
-	int j;
+	int j = 0;
 
-	for (j = 0; pointer[j]; j++)
-		free(pointer[j]);
-	free(pointer);
+	if (pointer)
+	{
+		for (; 1; j++)
+		{
+			if (pointer[j])
+				free(pointer[j]);
+			else
+				break;
+		}
+		free(pointer);
+	}
 }
 /**
  * charray_clone - clones an array of strings
@@ -23,23 +31,30 @@ char **charray_clone(char **envp)
 	int i = 0, j = 0;
 	char **n_envp = NULL;
 
-	while (envp[i])
-		i++;
-	n_envp = malloc(sizeof(char *) * (i + 2));
-	if (!n_envp)
-		return (NULL);
-	for (j = 0; envp[j]; j++)
+	if (envp)
 	{
-		n_envp[j] = malloc(sizeof(char) * (_strlen(envp[j]) + 1));
-		if (!n_envp[j])
-		{
-			for (; j >= 0; j--)
-				free(n_envp[j]);
-			free(n_envp);
+		while (envp[i])
+			i++;
+		n_envp = malloc(sizeof(char **) * (i + 2));
+		n_envp[i] = NULL;
+		n_envp[i + 1] = NULL;
+		if (!n_envp)
 			return (NULL);
+		for (j = 0; envp[j]; j++)
+		{
+			n_envp[j] = NULL;
+			n_envp[j] = malloc(sizeof(char *) * (_strlen(envp[j]) + 1));
+			
+			if (!n_envp[j])
+			{
+				for (; j >= 0; j--)
+					free(n_envp[j]);
+				free(n_envp);
+				return (NULL);
+			}
+			if (envp[j] != NULL)
+				_strcpy(n_envp[j], envp[j]);
 		}
-		if (envp[j] != NULL)
-			_strcpy(n_envp[j], envp[j]);
 	}
 	return (n_envp);
 }
@@ -53,7 +68,7 @@ char **charray_clone(char **envp)
 char *env_str(char *dir, int dir_size, char *cur_wd)
 {
 	char *r_path = NULL, *r_env = NULL;
-	int i, j, len = 0;
+	int i = 0, j = 0, len = 0;
 
 
 	r_path = (cur_wd == NULL ? getcwd(NULL, PATH_MAX) : &cur_wd[4]);
@@ -79,3 +94,4 @@ char *env_str(char *dir, int dir_size, char *cur_wd)
 	}
 	return ((r_path == NULL ? NULL : r_env));
 }
+

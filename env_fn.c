@@ -11,7 +11,7 @@ int ch_wd(char *p_name, char **envp);
  */
 int env_fn(char **envp)
 {
-	int i;
+	int i = 0;
 
 	if (envp)
 		for (i = 0; envp[i]; i++)
@@ -30,9 +30,9 @@ int env_fn(char **envp)
  */
 int ch_wd(char *p_name, char **envp)
 {
-	char *old_wd;
+	char *old_wd = NULL;
 	char *options[] = {NULL, "~", "-"};
-	int c_wd, o_wd, h_d, i, res;
+	int c_wd = 0, o_wd = 0, h_d = 0, i = 0, res = 0;
 
 	c_wd = get_env(envp, "PWD=");
 	o_wd = get_env(envp, "OLDPWD=");
@@ -75,7 +75,7 @@ int ch_wd(char *p_name, char **envp)
  */
 int get_env(char **envp, char *env_var)
 {
-	int i, j;
+	int i = 0, j = 0;
 
 	if (!envp)
 		return (-1);
@@ -94,3 +94,4 @@ int get_env(char **envp, char *env_var)
 		return (-1);
 	return (-1);
 }
+
