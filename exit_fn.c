@@ -53,6 +53,8 @@ void exit_stat(char **argx, char *lineptr_copy,
 		write(2, argx[1], _strlen(argx[1]));
 		write(2, " : numeric argument required\n", 29);
 	}
+	if (ex_val > 255)
+		ex_val = ex_val / 256;
 	free_char2D(envp);
 	free_char2D(argx);
 	free(lineptr_copy);
