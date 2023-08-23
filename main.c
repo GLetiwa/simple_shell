@@ -10,7 +10,7 @@
 int main(int argc __attribute__((unused)),
 		char **argv, char **envp_1 __attribute__((unused)))
 {
-	char *prompt = "(Eshell) $ ", *lineptr, **envp;
+	char *prompt = "($) ", *lineptr, **envp;
 	size_t n = 0, len = _strlen(prompt);
 	ssize_t chars_read;
 	int exit_stat = 0;
@@ -25,6 +25,8 @@ int main(int argc __attribute__((unused)),
 		{
 			free(lineptr);
 			free_char2D(envp);
+			if (isatty(STDIN_FILENO) == 1)
+				write(STDOUT_FILENO, "\n", 1);
 			if (exit_stat > 255)
 				return (exit_stat / 256);
 			return (exit_stat);
