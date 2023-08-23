@@ -31,7 +31,7 @@ int main(int argc __attribute__((unused)),
 				return (exit_stat / 256);
 			return (exit_stat);
 		}
-		comment_handler(lineptr);
+		/* comment_handler(lineptr); */
 		tokenize_input(lineptr, envp, argv, &exit_stat);
 		free(lineptr);
 		lineptr = NULL;
