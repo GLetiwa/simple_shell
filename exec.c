@@ -6,28 +6,16 @@
  * @envp: environment variables
  * @lineptr_copy: copy of the input command line
  * @input: original input command line
+ * @argv_0: first argument
+ * @er_val: error value
  * Return: error value or exit status of the command
  */
 void execute_command(char **argx, char *argv_0,
 		char *lineptr_copy, char *input, char **envp, int *er_val)
 {
-	int id = 0, check = 0, log_op = check_logical_op(argx);
-	int lexit_status = 0, rexit_status = 0;
-	char *path_ptr, **left_cmd, **right_cmd;
+	int id = 0, check = 0;
+	char *path_ptr;
 
-	if (log_op)
-	{
-		left_cmd = get_left_command(argx, log_op);
-		right_cmd = get_right_command(argx, log_op);
-		execute_command(left_cmd, argv_0, lineptr_copy, input, envp, &lexit_status);
-		if ((log_op == LOGICAL_AND && lexit_status == 0) ||
-			(log_op == LOGICAL_OR && lexit_status != 0))
-			execute_command(right_cmd, argv_0, lineptr_copy, input, envp, &rexit_status);
-		else
-			*er_val = lexit_status;
-		free_char2D(left_cmd);
-		free_char2D(right_cmd);
-	}
 	check = special_commands(argx, lineptr_copy, input, envp, er_val);
 	if (!check)
 	{
@@ -112,9 +100,11 @@ char *path_funct(char **envp, char *comm)
  * @lineptr_copy: copy of the input command line
  * @input: original input command line
  * @envp: environment variables
+ * @er_val: returned error value
  * Return: 1 if special command is executed, 0 otherwies
  */
-int special_commands(char **argx, char *lineptr_copy, char *input, char **envp, int *er_val)
+int special_commands(char **argx, char *lineptr_copy,
+		char *input, char **envp, int *er_val)
 {
 	char *comm_and = argx[0], *spec_comm[] = {"exit", "env", "cd",
 		"setenv", "unsetenv"};

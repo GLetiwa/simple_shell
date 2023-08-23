@@ -102,3 +102,29 @@ char **get_right_command(char **argx, int logical_op)
 	right_cmd[count] = NULL;
 	return (right_cmd);
 }
+void exec_log_op(char **argx, char *argv_0,
+	char *lineptr_copy, char *input, char **envp, int *er_val)
+{
+	int log_op = check_logical_op(argx);
+	int rexit = 0, lexit = 0;
+	char **left_cmd, **right_cmd;
+
+	if (log_op)
+	{
+		left_cmd = get_left_command(argx, log_op);
+		right_cmd = get_right_command(argx, log_op);
+		execute_command(left_cmd, argv_0, lineptr_copy, input, envp, &lexit);
+		if ((log_op == LOGICAL_AND && lexit == 0) ||
+				(log_op == LOGICAL_OR && lexit != 0))
+		{
+			execute_command(right_cmd, argv_0, lineptr_copy, input, envp, &rexit);
+		}
+		else
+		{
+			*er_val = lexit;
+		}
+		free_char2D(left_cmd);
+		free_char2D(right_cmd);
+	}
+
+}

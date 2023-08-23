@@ -7,6 +7,7 @@ int ch_wd(char *p_name, char **envp);
 /**
  * env_fn - displays environment variables
  * @envp: array of environment variables
+ * Return: 0 Always (Succesful)
  */
 int env_fn(char **envp)
 {

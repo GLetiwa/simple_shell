@@ -40,6 +40,8 @@ int main(int argc __attribute__((unused)),
  * tokenize_input - obtains tokens from strings
  * @input: string input from getline
  * @envp: 2D string from main args
+ * @argv: arguments passed
+ * @ex_stat: command exit status
  */
 void tokenize_input(char *input, char **envp, char **argv, int *ex_stat)
 {
